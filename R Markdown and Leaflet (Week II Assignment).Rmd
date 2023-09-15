@@ -1,0 +1,13 @@
+# R Markdown and Leaflet (Week II Assignment)
+
+```{r}
+library(leaflet)
+```
+After importing leaflet, we can start with the task.
+```{r}
+leaflet() %>% 
+  addTiles() %>%
+  setView(lng= 6.14569 , lat= 46.20222, zoom= 5) %>%
+  addMarkers(lng= c(6.14569 , 5.71667, 7.68682), lat= c(46.20222, 45.16667, 45.07049))
+```
+That's it.
