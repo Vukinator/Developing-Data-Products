@@ -1,0 +1,31 @@
+---
+title: "Week 3 Assignment"
+author: "Dominik Vuksan"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## R Markdown
+This is an R Markdown presentation for the Weeks 3 Assignment.
+
+## Reading plotly in
+```{r cars, echo = TRUE}
+library(plotly)
+```
+
+## Cars summary
+```{r}
+summary(cars)
+```
+
+## Slide with a plot created with Plotly
+```{r pressure}
+plot_ly(pressure)
+```
+
+That's it.
