@@ -1,0 +1,58 @@
+# Developing Data Products Course Project
+### Author: Dominik Vuksan
+
+For the final project in the Developing Data Products Course, we'll be making  a shiny application and it's documentation (both presentation in R Markdown and R Markdown document). So, let's start.
+
+```{r}
+library(shiny)
+```
+
+First, we will make the UI. In general, I like to start with the server first (which I did, but I am showing the UI first because the UI was first when I was learning making shiny applications) because I'm always defining my variables, and then writing the code for the UI.
+
+```{r}
+ui= fluidPage(
+  titlePanel("Predicting the stopping distance with speed for 1920's cars."),
+  #shows us the most upper text, which is considered to be the title
+  sidebarLayout( # telling R we are doing the sidebar
+    sidebarPanel( # telling R how is the sidebar going to look
+      h3("Slide me!"), # the text telling to slide the slider
+      sliderInput("sliderSpeed","Speed(mph)", 0, 60, value = 15) # this is the slider!
+    ),
+    mainPanel(
+      plotOutput("plot"), # the plot 
+      h3("Stopping distance prediction based on speed."),
+      textOutput("pred") # the predicted value
+  )
+)) # so, this was the user interface layout
+```
+
+Then we move on with the server code which show us what is happening in the background while we are sliding and waiting for the results.
+
+```{r}
+server= function(input, output){
+  
+  data= datasets::cars # reading the data in
+  model= lm(dist~speed, data) # linear model
+  pred= reactive({
+    speedInput= input$sliderSpeed
+    predict(model, newdata= data.frame(speed= speedInput))
+  }) # prediction
+  output$plot= renderPlot({
+    speedInput= input$sliderSpeed
+    plot(data$speed, data$dist,
+         xlab= "MPH", ylab="Distance (ft)",
+         bty= "n", xlim= c(0,200), ylim= c(0,200))
+    abline(model, col= "blue", lwd= 1)
+    points(speedInput, pred(), col= "red", pch=19) # the graph with the red dot prediction
+  })
+  output$predDist= renderText({
+    pred()
+  })
+}
+```
+
+After both UI and server being coded, we run the app and that's it.
+
+```{r}
+shinyApp(ui= ui, server= server)
+```

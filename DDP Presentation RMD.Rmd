@@ -1,0 +1,31 @@
+---
+title: "Developing Data Products Course Project Presentation"
+author: Dominik Vuksan
+date: September 20, 2023
+output: powerpoint_presentation
+---
+
+# Reading in the data
+```{r}
+data= datasets::cars # reading the data in
+```
+# Making a model
+```{r}
+model= lm(dist~speed, data) # linear model
+```
+# Prediction
+```{r}
+speed1= 80 # hypothetical value
+pred= predict(model, new.data= speed1)
+```
+# Plot
+```{r}
+plot(cars, 
+     xlab = "Speed (mph)", 
+     ylab = "Distance (ft)",
+     bty = "n",
+     xlim = c(0,200), 
+     ylim = c(0,200))
+abline(model, col= "blue", lwd= 1)
+points(pred, col= "red")
+```

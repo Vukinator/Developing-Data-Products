@@ -1,0 +1,24 @@
+# Applicating the shiny app code in R Markdown
+### Author: Dominik Vuksan
+
+```{r}
+data= datasets::cars # reading the data in
+model= lm(dist~speed, data) # linear model
+```
+
+```{r}
+speed1= 80
+pred= predict(model, new.data= speed1)
+pred
+```
+
+```{r}
+plot(cars, 
+     xlab = "Speed (mph)", 
+     ylab = "Distance (ft)",
+     bty = "n",
+     xlim = c(0,200), 
+     ylim = c(0,200))
+abline(model, col= "blue", lwd= 1)
+points(pred, col= "red")
+```
